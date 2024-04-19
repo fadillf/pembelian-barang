@@ -1,0 +1,1 @@
+<img src="{{asset('assets/logo/photobooth-logo.png')}}" alt="" class="text-center" style="height:50px;" srcset="">
