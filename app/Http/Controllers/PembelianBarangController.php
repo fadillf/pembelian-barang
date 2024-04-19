@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\PembelianBarang;
+use App\Models\MasterBarang;
 
 class PembelianBarangController extends Controller
 {
@@ -26,8 +27,11 @@ class PembelianBarangController extends Controller
      */
     public function create()
     {
+        $masterBarang = MasterBarang::get();
+
         return view('pages.pembelian-barang.create', [
             'pageTitle' => $this->_pageTitle,
+            'masterBarang' => $masterBarang
         ]);
     }
 
@@ -41,12 +45,29 @@ class PembelianBarangController extends Controller
             'Nama_Barang'   => 'required',
             'Satuan'        => 'required',
             'Qty'           => 'required',
-            'Harga'         => 'required'
+            'Harga'         => 'required',
+            'Diskon'        => 'required'
         ]);
-        $createdRecord = MasterBarang::create(array_merge($validatedData, [
-            'user_id' => auth()->user()->id,
+
+        $jumlah_beli = $request->Qty * $request->Harga;
+        $jumlah_diskon = ($jumlah_beli) * $request->Diskon / 100;
+        $subtotal = $jumlah_beli - $jumlah_diskon;
+        
+        // 'Nomor_Pembelian',
+        // 'Tanggal',
+        // 'Kode_Barang',
+        // 'Satuan',
+        // 'Qty',
+        // 'Harga',
+        // 'Diskon',
+        // 'Subtotal',
+
+        $createdRecord = PembelianBarang::create(array_merge($validatedData, [
+            'Nomor_Pembelian' => rand(0, 999),
+            'Tanggal' => \Carbon\Carbon::now(),
+            'Subtotal' => $subtotal,
         ]));
-        return redirect()->route('master-barang.index')->with('success', 'Data created successfully');
+        return redirect()->route('pembelian-barang.index')->with('success', 'Data created successfully');
     }
 
     /**
@@ -84,7 +105,7 @@ class PembelianBarangController extends Controller
             'Harga'         => 'required'
         ]);
         $masterBarang->update($validatedData);
-        return redirect()->route('master-barang.index')->with('success', 'Data updated successfully');
+        return redirect()->route('pembelian-barang.index')->with('success', 'Data updated successfully');
     }
 
     /**
@@ -93,6 +114,6 @@ class PembelianBarangController extends Controller
     public function destroy(MasterBarang $masterBarang)
     {
         $masterBarang->delete();
-        return redirect()->route('master-barang.index')->with('success', 'Data deleted successfully');
+        return redirect()->route('pembelian-barang.index')->with('success', 'Data deleted successfully');
     }
 }

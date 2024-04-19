@@ -10,9 +10,10 @@
         </x-slot>
     </x-sidebar.link>
 
-    <x-sidebar.link title="Master User" href="{{ route('master-user.index') }}" :isActive="request()->routeIs('master-user.index')" />
-
-    <x-sidebar.link title="Master Barang" href="{{ route('master-barang.index') }}" :isActive="request()->routeIs('master-barang')" />
+    @if(auth()->user()->role == 'admin')
+        <x-sidebar.link title="Master User" href="{{ route('master-user.index') }}" :isActive="request()->routeIs('master-user.index')" />
+        <x-sidebar.link title="Master Barang" href="{{ route('master-barang.index') }}" :isActive="request()->routeIs('master-barang')" />
+    @endif
 
     <x-sidebar.link title="Pembelian Barang" href="{{ route('pembelian-barang.index') }}" :isActive="request()->routeIs('pembelian-barang')" />
 

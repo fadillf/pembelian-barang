@@ -39,13 +39,15 @@ Route::middleware('auth')->group(function () {
      * MAIN ROUTES
      */
 
-    // /master-user
-    Route::resource('master-user', MasterUserController::class);
-    // /master-barang
-    Route::resource('master-barang', MasterBarangController::class);
+    Route::group(['middleware' => 'role:admin'], function(){
+        // #master-user
+        Route::resource('master-user', MasterUserController::class);
+        // #master-barang
+        Route::resource('master-barang', MasterBarangController::class);
+    });
+    // #pembelian-barang
     Route::resource('pembelian-barang', PembelianBarangController::class);
     
-
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

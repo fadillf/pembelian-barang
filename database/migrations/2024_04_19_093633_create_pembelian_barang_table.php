@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('Nomor_Pembelian');
             $table->date('Tanggal');
-            $table->string('Kode_Barang')->unique();
-            $table->string('Satuan')->unique();
+            $table->string('Kode_Barang');
+            $table->string('Satuan');
             $table->decimal('Qty', 10, 2);
             $table->decimal('Harga', 10, 2);
             $table->decimal('Diskon', 10, 2);

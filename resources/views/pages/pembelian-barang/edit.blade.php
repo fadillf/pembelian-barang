@@ -8,10 +8,10 @@
         </div>
     </x-slot>
     <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg dark:bg-gray-800 w-full">
-        <form method="post" action="{{ route('master-barang.update', $record->id) }}" class="mt-6 space-y-6">
+        <form method="post" action="{{ route('pembelian-barang.update', $record->id) }}" class="mt-6 space-y-6">
             @csrf
             @method('put')
-            @include('pages.master-barang._form', [
+            @include('pages.pembelian-barang._form', [
                 'isEditing' => true,
             ])
         </form>

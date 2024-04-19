@@ -44,13 +44,31 @@
     <x-form.input
         id="password"
         name="password"
-        type="text"
+        type="password"
         class="block w-full"
         :value="old('password', @$record->password ?? '')"
         placeholder="Password"
     />
 
     <x-form.error :messages="$errors->get('password')" />
+</div>
+
+<div class="mt-6 space-y-2">
+    <x-form.label
+        for="password_confirmation"
+        value="Konfirmasi Password"
+    />
+
+    <x-form.input
+        id="password_confirmation"
+        name="password_confirmation"
+        type="password"
+        class="block w-full"
+        :value="old('password_confirmation')"
+        placeholder="Konfirmasi Password"
+    />
+
+    <x-form.error :messages="$errors->get('password_confirmation')" />
 </div>
 @endif
 

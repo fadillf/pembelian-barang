@@ -29,6 +29,10 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        $request->user()->update([
+            'last_login' => \Carbon\Carbon::now()->toDateTimeString(),
+        ]);
+
         return redirect()->intended(RouteServiceProvider::HOME);
     }
 

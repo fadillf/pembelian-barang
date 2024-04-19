@@ -39,6 +39,11 @@
             </thead>
             <tbody>
                 @forelse ($data as $item)
+                    @php
+                        $jumlah_beli = $item->Qty * $item->Harga;
+                        $jumlah_diskon = ($jumlah_beli) * $item->Diskon / 100;
+                        $subtotal = $jumlah_beli - $jumlah_diskon;
+                    @endphp
                     <tr class="hover:bg-gray-200 transition-all">
                         <td class="py-2 px-4 border-b border-r">{{ $loop->iteration }}</td>
                         <td class="py-2 px-4 border-b border-r">{{ $item->Nomor_Pembelian }}</td>
@@ -47,7 +52,7 @@
                         <td class="py-2 px-4 border-b border-r">{{ (int)$item->Qty.' '.$item->Satuan }}</td>
                         <td class="py-2 px-4 border-b border-r">@currency((int)$item->Harga)</td>
                         <td class="py-2 px-4 border-b border-r">{{(int)$item->Diskon}}%</td>
-                        <td class="py-2 px-4 border-b border-r">@currency((int)$item->Subtotal)</td>
+                        <td class="py-2 px-4 border-b border-r">@currency((int)$subtotal)</td>
                         <td class="py-2 px-4 border-b border-r">
                             <div class="flex space-x-2">
                                 <a href="{{ route('pembelian-barang.edit', $item->id) }}"
